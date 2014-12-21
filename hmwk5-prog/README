@@ -1,0 +1,24 @@
+Shanlongchaun Gu (sg3208)
+Andrew Kallem (ajk2214)
+Sihan Wang (sw2921)
+CS 4118 - Operating Systems
+Homework 5, Programming Problems
+
+
+Notes on our implementation:
+In our system call, we set the vm_flags to include the VM_RESERVED flag in order to prevent the vmas from being merged.  (In particular, the function merge_vmas does not merge a vma if its vm_flags are VM_SPECIAL, and VM_SPECIAL includes VM_RESERVED.)
+
+In our system call, we ignore pte's that point to 1mb sections per the following Piazza post: https://piazza.com/class/hxmyhj3hhcj16l?cid=442.  To do this, we check the final bit.  This is obviously not architecture independent.
+
+In vm_inspector.c, rather than try to include the page table related kernel macros, we simply defined equivalent versions ourselves.
+
+Please see the written.txt file for the results of our investigation (last part of the HW).
+
+
+Notes on team collaboration:
+We did the vast majority of the coding as a team together in person.  You may notice that most of the commts are under Andrew's name, which is simply because we used his computer when we worked together in person.
+
+
+Citations:
+http://stackoverflow.com/questions/523724/c-c-check-if-one-bit-is-set-in-i-e-int-variable - Provided the CHECK_BIT macro
+http://stackoverflow.com/questions/2249731/how-to-get-bit-by-bit-data-from-a-integer-value-in-c - Helped us modify CHECK_BIT macro

@@ -1,0 +1,17 @@
+Shanlongchaun Gu (sg3208)
+Andrew Kallem (ajk2214)
+Sihan Wang (sw2921)
+CS 4118 - Operating Systems
+Homework 5, Programming Problems
+
+We investigated the commonalities between zygote and three other apps: calculator, clock, and Chrome.
+
+Comparing zygote with these apps using cat proc/pid/maps and vm_inspector, we see that the common parts of the page table are all references to system/bin, system/lib, system/framework, and others in the system/ directory.  For virtual addresses in an app corresponding to these data, they map to the same physical address as the corresponding virtual addresses in zygote.  Presumably these data are simply system-level libraries and functionality that all Android apps share.  (We do note that, in some cases, these virtual addresses in the app do not [yet] map to any physical page.  Presumably this is just because the app has not accessed that virtual address yet.)
+
+We also notice some commonalities in the physical addresses *between* apps that are not present in zygote.  Specifically, we see many entries in proc/pid/maps for dev/kgsl.  Using vm_inspector to compare the physical locations of the virtual addresses corresponding to these entries, we see that the physical addresses are the same.  It appears that dev/kgsl is a device driver for OpenGL graphics processing (see citation below) that many apps use; therefore it is not surprising that all of the processes that use it refer to the same physical memory.
+
+The differences between each app and zygote include the .apk binary for the app itself.
+
+
+Citations:
+http://lwn.net/Articles/394665/
